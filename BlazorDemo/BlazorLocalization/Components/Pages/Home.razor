@@ -1,13 +1,35 @@
-﻿@inject IStringLocalizer<Home> Localizer
-
-<h1>@Localizer["HelloWorld"]</h1>
+﻿
 
 @page "/"
 @using Microsoft.Extensions.Localization
+@using System.Diagnostics
+@using System.Globalization
+@using System.Reflection
 
 <PageTitle>Home</PageTitle>
 
-<h1>@Localizer["HomeTitle"]</h1>
+
+<h1>@_shareTranslator["ShareTitle"]</h1>
+<h1>@_translator["HomeTitle"]</h1>
 <h1>Hello, world!</h1>
 
 Welcome to your new app.
+
+@code
+{
+    protected override async Task OnInitializedAsync()
+    {
+        
+        var assembly = Assembly.GetExecutingAssembly();
+        var resourceNames = assembly.GetManifestResourceNames();
+        foreach (var resourceName in resourceNames)
+        {
+            Debug.WriteLine(resourceName);
+        }
+
+        Debug.WriteLine($"当前文化: {CultureInfo.CurrentCulture}");
+        Debug.WriteLine($"当前 UI 文化: {CultureInfo.CurrentUICulture}");
+        Debug.WriteLine($"当前区域性: {CultureInfo.CurrentCulture.Name}");
+        Debug.WriteLine($"HomeTitle本地化字符串: {_translator["HomeTitle"]}");
+    }
+}

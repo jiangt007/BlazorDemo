@@ -6,4 +6,8 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 	</PropertyGroup>
 
+	<ItemGroup>
+	  <Folder Include="Resources\新文件夹\" />
+	</ItemGroup>
+
 </Project>
