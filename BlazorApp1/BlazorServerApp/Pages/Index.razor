@@ -1,0 +1,54 @@
+﻿@inject IJSRuntime JS
+@page "/"
+@using BlazorServerApp.Data
+@using BlazorServerApp.Components
+
+<PageTitle>Index</PageTitle>
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<h2>事件</h2>
+<SurveyPrompt Title="How is Blazor working for you?"/>
+<button @onclick="@(e => Submit(e))">提交></button>
+<Button OnClick="Submit">自定义组件按钮</Button>
+
+<h2>模板参数</h2>
+<Table TItem="WeatherForecast" DataChanged="GetData">
+    <HeaderTemplate>
+        <th>日期</th>
+        <th>温度C</th>
+        <th>温度F</th>
+    </HeaderTemplate>
+    <RowTemplate>
+        <td>@context.Date</td>
+        <td>@context.TemperatureC</td>
+        <td>@context.TemperatureF</td>
+    </RowTemplate>
+    <FooterTemplate>
+        <td>共 @context 条数据</td>
+    </FooterTemplate>
+</Table>
+
+@code
+{
+
+    private List<WeatherForecast> GetData()
+    {
+        return new List<WeatherForecast>
+        {
+            new() { Date = DateTime.Now, TemperatureC = 1 },
+            new() { Date = DateTime.Now, TemperatureC = 2 },
+            new() { Date = DateTime.Now, TemperatureC = 3 },
+            new() { Date = DateTime.Now, TemperatureC = 4 },
+            new() { Date = DateTime.Now, TemperatureC = 5 }
+        };
+    }
+
+    Task Submit(MouseEventArgs e)
+    {
+        JS.InvokeVoidAsync("alert", "submit");
+        return Task.CompletedTask;
+    }
+}

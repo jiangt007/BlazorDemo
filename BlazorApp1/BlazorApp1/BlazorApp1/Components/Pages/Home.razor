@@ -1,0 +1,21 @@
+﻿@using Microsoft.JSInterop
+@inject IJSRuntime JS
+
+@page "/"
+
+<PageTitle>Home</PageTitle>
+
+<h1>Hello, world!</h1>
+
+@* <button onclick="javascript:alert('submit')">提交</button> *@
+<button @onclick="@(e=>Click(e))">提交</button>
+Welcome to your new app.
+
+@code
+{
+    Task Click(MouseEventArgs e)
+    {
+        JS.InvokeVoidAsync("alert", "submit");
+        return Task.CompletedTask;
+    }
+}
